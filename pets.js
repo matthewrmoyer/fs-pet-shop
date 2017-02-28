@@ -14,10 +14,11 @@ if (process.argv[2] == 'read') {
 }
 
 function read() {
-	console.log('reading')
 	var file = './pets.json'
 	var contents = fs.readFileSync(file).toString();
-	console.log(contents)
+	var obj = JSON.parse(contents);
+	console.log("length:" + obj.length)
+	console.log(obj)
 }
 
 function create() {
