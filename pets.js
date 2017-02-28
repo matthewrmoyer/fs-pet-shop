@@ -1,4 +1,6 @@
 
+var fs = require('fs')
+
 if (process.argv[2] == 'read') {
 	read()
 } else if (process.argv[2] == 'create') {
