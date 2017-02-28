@@ -15,16 +15,16 @@ if (process.argv[2] == 'read') {
 function read() {
 	var file = './pets.json'
 	var contents = fs.readFileSync(file).toString();
-	var obj = JSON.parse(contents);
+	var parsedContents = JSON.parse(contents);
 
 	if (!process.argv[3]) {
-		console.log(obj)
+		console.log(parsedContents)
 	}
 	if (process.argv[3]) {
-		if (process.argv[3] > obj.length) {
+		if (process.argv[3] > parsedContents.length) {
 			console.log('Usage: node pets.js read INDEX')
 		} else {
-			var targetObject = obj[process.argv[3]]
+			var targetObject = parsedContents[process.argv[3]]
 			console.log(targetObject)
 		}
 	}
