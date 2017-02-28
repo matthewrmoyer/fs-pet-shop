@@ -15,6 +15,9 @@ if (process.argv[2] == 'read') {
 
 function read() {
 	console.log('reading')
+	var file = './pets.json'
+	var contents = fs.readFileSync(file).toString();
+	console.log(contents)
 }
 
 function create() {
