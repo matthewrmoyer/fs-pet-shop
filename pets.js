@@ -1,4 +1,3 @@
-
 var fs = require('fs')
 
 if (process.argv[2] == 'read') {
@@ -17,8 +16,18 @@ function read() {
 	var file = './pets.json'
 	var contents = fs.readFileSync(file).toString();
 	var obj = JSON.parse(contents);
-	console.log("length:" + obj.length)
-	console.log(obj)
+
+	if (!process.argv[3]) {
+		console.log(obj)
+	}
+	if (process.argv[3]) {
+		if (process.argv[3] > obj.length) {
+			console.log('Usage: node pets.js read INDEX')
+		} else {
+			var targetObject = obj[process.argv[3]]
+			console.log(targetObject)
+		}
+	}
 }
 
 function create() {
@@ -29,6 +38,6 @@ function update() {
 	console.log('updating')
 }
 
-function destroy(){
+function destroy() {
 	console.log('destroying')
 }
