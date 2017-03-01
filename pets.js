@@ -20,7 +20,6 @@ function read() {
 		if (err) {
 			throw err
 		};
-
 		var parsedData = JSON.parse(data)
 
 		if (!process.argv[3]) {
