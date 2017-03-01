@@ -57,16 +57,25 @@ function create() {
 		if (err) {
 			throw err
 		};
-		console.log(data)
-		var parsedData = JSON.parse(data);
-		console.log(parsedData)
-	})
+		//data.push(newPet)
 
-	fs.writeFile('./pets.json', JSON.stringify(newPet), (err) => {
+
+		var parsedData = JSON.parse(data)
+		console.log(parsedData[0])
+		parsedData.push(newPet)
+		console.log(parsedData)
+		var stringified = JSON.stringify(parsedData)
+
+
+		fs.writeFile('./pets.json', stringified, (err) => {
 		if (err) {
 			console.log(err)
 		}
 	})
+
+	})
+
+
 }
 
 function update() {
