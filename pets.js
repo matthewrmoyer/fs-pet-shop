@@ -9,7 +9,8 @@ if (process.argv[2] == 'read') {
 } else if (process.argv[2] == 'destroy') {
 	destroy()
 } else {
-	console.log("Usage: node pets.js [read | create | update | destroy")
+	console.error("Usage: node pets.js [read | create | update | destroy]")
+	process.exit(1)
 }
 
 function read() {
@@ -29,7 +30,8 @@ function read() {
 		if (process.argv[3]) {
 			var targetIndex = process.argv[3];
 			if (targetIndex >= parsedData.length) {
-				console.log('Usage: node pets.js read INDEX')
+				console.error('Usage: node pets.js read INDEX')
+				process.exit(1)
 			} else {
 				console.log(parsedData[targetIndex])
 			}
@@ -38,21 +40,18 @@ function read() {
 }
 
 function create() {
-	console.log('creating')
 	var newPet = {}
 	if (process.argv[5]) {
 		var age = Number(process.argv[3])
 		var kind = process.argv[4]
 		var name = process.argv[5]
 		newPet["age"] = age,
-			newPet["kind"] = kind,
-			newPet["name"] = name
+		newPet["kind"] = kind,
+		newPet["name"] = name
 	} else {
 		console.error('Usage: node pets.js create AGE KIND NAME')
 		process.exit(1)
 	}
-	console.log(newPet)
-
 
 	fs.readFile('./pets.json', 'utf8', (err, data) => {
 		if (err) {
@@ -62,17 +61,16 @@ function create() {
 
 
 		var parsedData = JSON.parse(data)
-		console.log(parsedData[0])
+			// console.log(parsedData[0])
 		parsedData.push(newPet)
-		console.log(parsedData)
 		var stringified = JSON.stringify(parsedData)
 
 
 		fs.writeFile('./pets.json', stringified, (err) => {
-		if (err) {
-			console.log(err)
-		}
-	})
+			if (err) {
+				console.log(err)
+			}
+		})
 
 	})
 
