@@ -48,7 +48,8 @@ function create() {
 			newPet["kind"] = kind,
 			newPet["name"] = name
 	} else {
-		console.log('Usage: node pets.js create AGE KIND NAME')
+		console.error('Usage: node pets.js create AGE KIND NAME')
+		process.exit(1)
 	}
 	console.log(newPet)
 
