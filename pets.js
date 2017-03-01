@@ -13,24 +13,8 @@ if (process.argv[2] == 'read') {
 }
 
 function read() {
-	//????if(err){throw err;}
-	// var file = './pets.json'
-	// var contents = fs.readFileSync(file).toString();
-	// var parsedContents = JSON.parse(contents);
 
-	// if (!process.argv[3]) {
-	// 	console.log(parsedContents)
-	// }
-	// if (process.argv[3]) {
-	// 	if (process.argv[3] >= parsedContents.length) {
-	// 		console.log('Usage: node pets.js read INDEX')
-	// 	} else {
-	// 		var targetObject = parsedContents[process.argv[3]]
-	// 		console.log(targetObject)
-	// 	}
-	// }
 	var filePath = './pets.json'
-
 	fs.readFile(filePath, 'utf8', (err, data) => {
 		if (err) {
 			throw err
@@ -38,7 +22,9 @@ function read() {
 
 		var parsedData = JSON.parse(data)
 
-		if(!process.argv[3]){console.log(parsedData)}
+		if (!process.argv[3]) {
+			console.log(parsedData)
+		}
 
 		if (process.argv[3]) {
 			var targetIndex = process.argv[3];
@@ -53,6 +39,34 @@ function read() {
 
 function create() {
 	console.log('creating')
+	var newPet = {}
+	if (process.argv[5]) {
+		var age = Number(process.argv[3])
+		var kind = process.argv[4]
+		var name = process.argv[5]
+		newPet["age"] = age,
+			newPet["kind"] = kind,
+			newPet["name"] = name
+	} else {
+		console.log('Usage: node pets.js create AGE KIND NAME')
+	}
+	console.log(newPet)
+
+
+	fs.readFile('./pets.json', 'utf8', (err, data) => {
+		if (err) {
+			throw err
+		};
+		console.log(data)
+		var parsedData = JSON.parse(data);
+		console.log(parsedData)
+	})
+
+	fs.writeFile('./pets.json', JSON.stringify(newPet), (err) => {
+		if (err) {
+			console.log(err)
+		}
+	})
 }
 
 function update() {
