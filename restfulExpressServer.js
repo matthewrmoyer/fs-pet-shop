@@ -56,7 +56,11 @@ app.post('/pets', (req, res) => {
 		var kind = newPet.kind
 		var name = newPet.name
 
-		var newPetObject = {age: age, kind: kind, name: name}
+		var newPetObject = {
+			age: age,
+			kind: kind,
+			name: name
+		}
 		db.identity()
 			.push(newPetObject)
 			.write()
@@ -77,19 +81,130 @@ app.post('/pets', (req, res) => {
 })
 
 app.delete('/pets/:id', (req, res) => {
-	var indexToDelete  = req.params.id -1;
+	var indexToDelete = req.params.id;
 	console.log("deletingggg")
 	db.identity()
 		.remove(pets[indexToDelete])
 		.write()
-		.then(function(){
-		res.set('Content-Type', 'application/json')
-				res.status(200)
-				res.send(db)
+		.then(function() {
+			res.set('Content-Type', 'application/json')
+			res.status(200)
+			res.send(db)
 		})
 		.catch(err => {
 			console.log(err)
 		})
+})
+
+app.patch('/pets/:id', (req, res) => {
+	var indexToPatch = req.params.id
+	console.log(indexToPatch)
+	console.log(req.body.name)
+	var newPetObject;
+
+	if (req.body.age && req.body.kind && req.body.name) {
+
+		var age = parseInt(req.body.age, 10)
+		var kind = req.body.kind
+		var name = req.body.name
+
+		var newPetObject = {
+			age: age,
+			kind: kind,
+			name: name
+		}
+	}
+
+	if (req.body.age && req.body.kind && !req.body.name) {
+
+		var age = parseInt(req.body.age, 10)
+		var kind = req.body.kind
+		var name = req.body.name
+
+		var newPetObject = {
+			age: age,
+			kind: kind,
+			name: pets[indexToPatch]['name']
+		}
+	}
+
+
+	if (req.body.age && !req.body.kind && req.body.name) {
+
+		var age = parseInt(req.body.age, 10)
+		var kind = req.body.kind
+		var name = req.body.name
+
+		var newPetObject = {
+			age: age,
+			kind: pets[indexToPatch]['kind'],
+			name: name
+		}
+	}
+
+
+	if (!req.body.age && req.body.kind && req.body.name) {
+
+		var age = parseInt(req.body.age, 10)
+		var kind = req.body.kind
+		var name = req.body.name
+
+		var newPetObject = {
+			age: pets[indexToPatch]['age'],
+			kind: kind,
+			name: name
+		}
+	}
+
+	if (req.body.age && !req.body.kind && !req.body.name) {
+
+		var age = parseInt(req.body.age, 10)
+		var kind = req.body.kind
+		var name = req.body.name
+
+		var newPetObject = {
+			age: age,
+			kind: pets[indexToPatch]['kind'],
+			name: pets[indexToPatch]['name']
+		}
+	}
+
+
+	if (!req.body.age && req.body.kind && !req.body.name) {
+
+		var age = parseInt(req.body.age, 10)
+		var kind = req.body.kind
+		var name = req.body.name
+
+		var newPetObject = {
+			age: pets[indexToPatch]['age'],
+			kind: kind,
+			name: pets[indexToPatch]['name']
+		}
+	}
+
+	if (!req.body.age && !req.body.kind && req.body.name) {
+
+		var age = parseInt(req.body.age, 10)
+		var kind = req.body.kind
+		var name = req.body.name
+
+		var newPetObject = {
+			age: pets[indexToPatch]['age'],
+			kind: pets[indexToPatch]['kind'],
+			name: name
+		}
+	}
+
+
+	db.identity()
+		.find(pets[indexToPatch])
+		.assign(newPetObject)
+		.write()
+		.then(function(data) {
+			res.send(data)
+		})
+
 })
 
 module.exports = app
