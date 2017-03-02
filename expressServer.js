@@ -13,20 +13,25 @@ app.listen(PORT, () => {
 
 app.get('/pets', (req, res) => {
 	res.status(200)
+	res.set('Content-Type', 'application/json')
 	res.send(JSON.stringify(pets));
 })
 
 app.get('/pets/:id', (req, res) => {
 	const id = req.params.id;
-	if (id > pets.length) {
+	if (id >= pets.length) {
+		res.set('Content-Type', 'text/plain')
 		res.status(404)
-		res.write("Not Found");
-		res.end();
+		res.end("Not Found");
 	} else if (id < 0) {
+		res.set('Content-Type', 'text/plain')
 		res.status(404)
-		res.write("Not Found");
-		res.end();
+		res.end("Not Found");
 	} else {
-		res.send(pets[id])
+		res.status(200)
+		res.set('Content-Type', 'application/json')
+		res.send(JSON.stringify(pets[id]))
 	}
 })
+
+module.exports = app
